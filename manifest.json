@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "UC Grabber",
+  "version": "extension 1.0",
+
+  "default_locale": "en",
+  "description": "A plain text description",
+
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "html/popup.html",
+    "default_title": "Zigot state chrome app"
+  }
+}

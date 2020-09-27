@@ -3,9 +3,6 @@
   "name": "UC Grabber",
   "version": "0.1",
 
-  "default_locale": "en",
-  "description": "A plain text description",
-
   "browser_action": {
     "default_icon": "images/icon.png",
     "default_popup": "html/popup.html",

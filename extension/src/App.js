@@ -1,14 +1,20 @@
 import React from "react";
+import styled from "styled-components/macro";
 import logo from "./logo.svg";
 import "./App.css";
 
+const Container = styled.div`
+  width: 300px;
+  height: 600px;
+`;
+
 function App() {
   return (
-    <div className="App">
+    <Container>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload. Hey I'm reloaded.
+          Edit <code>src/App.js</code> and save to reload.
         </p>
         <a
           className="App-link"
@@ -16,10 +22,10 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn What
+          Learn React
         </a>
       </header>
-    </div>
+    </Container>
   );
 }
 

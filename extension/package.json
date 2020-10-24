@@ -9,13 +9,18 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "watch": "^1.0.2"
+  },
+  "watch": {
+    "npm run build": "./src"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "./script/build.sh",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch": "watch 'npm run build' ./src"
   },
   "eslintConfig": {
     "extends": "react-app"

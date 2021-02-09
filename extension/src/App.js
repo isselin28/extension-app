@@ -1,30 +1,77 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/macro";
-import logo from "./logo.svg";
 import "./App.css";
+import SessionBar from "./Components/SessionBar";
 
 const Container = styled.div`
+  width: 350px;
+  height: 350px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 8px;
+`;
+
+const DefaultWrapper = styled.div`
+  display: flex;
+  height: 32px;
   width: 300px;
-  height: 600px;
+  justify-content: center;
+  align-items: center;
+
+  border: solid 0.5px #a7a7a7;
+  border-radius: 4px;
+  margin: 4px 0;
+`;
+
+const DefaultButton = styled.button`
+  display: flex;
+  height: 32px;
+  width: 300px;
+  justify-content: center;
+  align-items: center;
+
+  border: solid 0.5px #3a3238;
+  background-color: #e8b4bc;
+  border-radius: 4px;
+  margin: 4px 0;
 `;
 
 function App() {
+  const [sessionTime, setSessionTime] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(0);
+
+  const handleClickMinute = (value) => {
+    setSessionTime(value);
+  };
+
+  const handleStartSession = () => {
+    const seconds = Number(sessionTime) * 60;
+    setTimeLeft(seconds);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (sessionTime > 0) {
+        setTimeLeft(timeLeft - 1);
+      }
+    }, 1000);
+    if (timeLeft === 0) {
+      clearTimeout(timer);
+    }
+    return () => clearTimeout(timer);
+  }, [timeLeft, sessionTime]);
+
   return (
     <Container>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DefaultWrapper>How many minutes your session will take?</DefaultWrapper>
+      <SessionBar onClick={handleClickMinute} />
+      <DefaultWrapper>{sessionTime}</DefaultWrapper>
+      <DefaultWrapper>{timeLeft}</DefaultWrapper>
+      <DefaultButton onClick={handleStartSession}>Start Pomodoro</DefaultButton>
     </Container>
   );
 }

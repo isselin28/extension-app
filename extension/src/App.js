@@ -21,7 +21,16 @@ const DefaultWrapper = styled.div`
   width: 300px;
   justify-content: center;
   align-items: center;
+`;
 
+const DynamicWrapper = styled(DefaultWrapper)`
+  border: solid 0.5px #a7a7a7;
+  border-radius: 4px;
+  margin: 4px 0;
+`;
+
+const TextWrapper = styled(DefaultWrapper)`
+  font-size: 12px;
   border: solid 0.5px #a7a7a7;
   border-radius: 4px;
   margin: 4px 0;
@@ -34,9 +43,24 @@ const DefaultButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  border: solid 0.5px #3a3238;
-  background-color: #e8b4bc;
+  border: solid 0.5px #ee6352;
+  background-color: #ee6352;
+  color: white;
   border-radius: 4px;
+  margin: 4px 0;
+`;
+
+const Timer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+
+  border: solid 0.5px #ee6352;
+  border-radius: 50%;
+  background-color: #ee6352;
+  color: white;
   margin: 4px 0;
 `;
 
@@ -74,10 +98,9 @@ function App() {
 
   return (
     <Container>
-      <DefaultWrapper>How many minutes your session will take?</DefaultWrapper>
+      <TextWrapper>How many minutes your session will take?</TextWrapper>
       <SessionBar onClick={handleClickMinute} />
-      <DefaultWrapper>{sessionTime}</DefaultWrapper>
-      <DefaultWrapper>{timeLeft}</DefaultWrapper>
+      <Timer>{onSession ? timeLeft : sessionTime}</Timer>
       {!onSession && (
         <DefaultButton onClick={handleStartSession}>
           Start Pomodoro

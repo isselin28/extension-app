@@ -69,6 +69,8 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [onSession, setOnSession] = useState(false);
 
+  let formattedTimeLeft;
+
   const handleClickMinute = (value) => {
     setSessionTime(value);
   };
@@ -96,11 +98,21 @@ function App() {
     setOnSession(false);
   };
 
+  let hours = Math.floor(timeLeft / 3600);
+  let minutes = Math.floor(timeLeft / 60 - hours * 60);
+  let seconds = Math.floor(timeLeft - minutes * 60 - hours * 3600);
+
+  let displayHours = hours < 10 ? `0${hours}` : hours;
+  let displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  let displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+  formattedTimeLeft = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+
   return (
     <Container>
       <TextWrapper>How many minutes your session will take?</TextWrapper>
       <SessionBar onClick={handleClickMinute} />
-      <Timer>{onSession ? timeLeft : sessionTime}</Timer>
+      <Timer>{onSession ? formattedTimeLeft : sessionTime}</Timer>
       {!onSession && (
         <DefaultButton onClick={handleStartSession}>
           Start Pomodoro

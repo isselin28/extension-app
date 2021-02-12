@@ -6,11 +6,19 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Minutes = styled.button`
-  width: 30px;
+const Minutes = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
   height: 32px;
   font-size: 12px;
-  padding: 4px;
+
+  margin: 1px;
+  border-radius: 50%;
+  background-color: #ee6532;
+  border: 1px solid #ee6352;
+  color: white;
 `;
 
 function SessionBar(props) {

@@ -41,8 +41,9 @@ const DefaultButton = styled.button`
 `;
 
 function App() {
-  const [sessionTime, setSessionTime] = useState(0);
+  const [sessionTime, setSessionTime] = useState(25);
   const [timeLeft, setTimeLeft] = useState(0);
+  const [onSession, setOnSession] = useState(false);
 
   const handleClickMinute = (value) => {
     setSessionTime(value);
@@ -51,6 +52,7 @@ function App() {
   const handleStartSession = () => {
     const seconds = Number(sessionTime) * 60;
     setTimeLeft(seconds);
+    setOnSession(true);
   };
 
   useEffect(() => {
@@ -65,13 +67,25 @@ function App() {
     return () => clearTimeout(timer);
   }, [timeLeft, sessionTime]);
 
+  const handleStopSession = () => {
+    setTimeLeft(0);
+    setOnSession(false);
+  };
+
   return (
     <Container>
       <DefaultWrapper>How many minutes your session will take?</DefaultWrapper>
       <SessionBar onClick={handleClickMinute} />
       <DefaultWrapper>{sessionTime}</DefaultWrapper>
       <DefaultWrapper>{timeLeft}</DefaultWrapper>
-      <DefaultButton onClick={handleStartSession}>Start Pomodoro</DefaultButton>
+      {!onSession && (
+        <DefaultButton onClick={handleStartSession}>
+          Start Pomodoro
+        </DefaultButton>
+      )}
+      {onSession && (
+        <DefaultButton onClick={handleStopSession}>Stop Pomodoro</DefaultButton>
+      )}
     </Container>
   );
 }

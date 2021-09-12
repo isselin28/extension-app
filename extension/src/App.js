@@ -37,7 +37,9 @@ const FlexWrapper = styled.div`
   align-items: center;
 `;
 
-const DeepWorkButton = styled(Button)`
+const DeepWorkButton = styled(Button).attrs({
+  primary: true,
+})`
   flex: 1;
   width: 100%;
   margin: 4px;
@@ -62,9 +64,8 @@ const Timer = styled.div`
   width: 100px;
   height: 100px;
 
-  border: solid 0.5px #ee6352;
   border-radius: 50%;
-  background-color: #ee6352;
+  background-color: ${(props) => (props.primary ? "#ee6352" : "#3f97b9")};
   color: white;
   margin: 4px 0;
 `;
@@ -156,7 +157,7 @@ function App() {
     <>
       <Container>
         <FlexWrapper>
-          <DeepWorkButton onClick={() => setIsDeepWorkSession(true)}>
+          <DeepWorkButton primary onClick={() => setIsDeepWorkSession(true)}>
             Deep Work
           </DeepWorkButton>
           <BreakButton onClick={() => setIsDeepWorkSession(false)}>
@@ -168,15 +169,25 @@ function App() {
           onClick={handleClickMinute}
           disabled={onSession}
         />
-        <Timer>{onSession ? formattedTimeLeft : sessionTime}</Timer>
+        <Timer primary={isDeepWorkSession}>
+          {onSession ? formattedTimeLeft : sessionTime}
+        </Timer>
         <div>
           {!onSession && (
-            <Button onClick={handleStartSession} width={300}>
+            <Button
+              primary={isDeepWorkSession}
+              onClick={handleStartSession}
+              width={300}
+            >
               Start Pomodoro
             </Button>
           )}
           {onSession && (
-            <Button onClick={handleStopSession} width={300}>
+            <Button
+              primary={isDeepWorkSession}
+              onClick={handleStopSession}
+              width={300}
+            >
               Stop Pomodoro
             </Button>
           )}

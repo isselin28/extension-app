@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import SessionBar from "./Components/SessionBar";
+import Count from "./Components/Count";
 import Button from "./Components/Button";
 
 const Container = styled.div`
@@ -15,19 +16,43 @@ const Container = styled.div`
   padding: 8px;
 `;
 
-const DefaultWrapper = styled.div`
+const TextWrapper = styled.div`
   display: flex;
   height: 32px;
   width: 300px;
   justify-content: center;
   align-items: center;
-`;
-
-const TextWrapper = styled(DefaultWrapper)`
   font-size: 12px;
   border: solid 0.5px #a7a7a7;
   border-radius: 4px;
   margin: 4px 0;
+`;
+
+const FlexWrapper = styled.div`
+  display: flex;
+  height: 32px;
+  width: 300px;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DeepWorkButton = styled(Button)`
+  flex: 1;
+  width: 100%;
+  margin: 4px;
+`;
+
+const BreakButton = styled(Button)`
+  flex: 1;
+  width: 100%;
+  background-color: #3f97b9;
+
+  &:hover,
+  &:active {
+    background-color: #09688c;
+    cursor: pointer;
+  }
 `;
 
 const Timer = styled.div`
@@ -50,6 +75,7 @@ function App() {
   const [onSession, setOnSession] = useState(false);
   const [countSession, setCountSession] = useState(0);
   const [countTotalTime, setCountTotalTime] = useState(0);
+  const [sessionType, setSessionType] = useState("deepwork");
 
   let formattedTimeLeft;
 
@@ -64,6 +90,15 @@ function App() {
   };
 
   useEffect(() => {
+    var opt = {
+      type: "list",
+      title: "keep burning",
+      message: "Primary message to display",
+      priority: 1,
+      items: [{ title: "", message: "" }],
+      iconUrl: "./logo.svg",
+    };
+
     const timer = setTimeout(() => {
       if (sessionTime > 0) {
         setTimeLeft(timeLeft - 1);
@@ -75,8 +110,11 @@ function App() {
       clearTimeout(timer);
 
       if (onSession) {
+        window.alert("hi");
         setOnSession(false);
-        handleCountSessions(sessionTime);
+        if (sessionType === "deepwork") {
+          handleCountSessions(sessionTime);
+        }
       }
       return;
     }
@@ -87,7 +125,9 @@ function App() {
   const handleStopSession = () => {
     setTimeLeft(0);
     setOnSession(false);
-    handleCountSessions(sessionTime - timeLeft / 60);
+    if (sessionType === "deepwork") {
+      handleCountSessions(sessionTime - timeLeft / 60);
+    }
   };
 
   let hours = Math.floor(timeLeft / 3600);
@@ -108,7 +148,14 @@ function App() {
   return (
     <>
       <Container>
-        <TextWrapper>How many minutes your session will take?</TextWrapper>
+        <FlexWrapper>
+          <DeepWorkButton onClick={() => setSessionType("deepwork")}>
+            Deep Work
+          </DeepWorkButton>
+          <BreakButton onClick={() => setSessionType("break")}>
+            Break
+          </BreakButton>
+        </FlexWrapper>
         <SessionBar onClick={handleClickMinute} disabled={onSession} />
         <Timer>{onSession ? formattedTimeLeft : sessionTime}</Timer>
         <div>

@@ -75,7 +75,7 @@ function App() {
   const [onSession, setOnSession] = useState(false);
   const [countSession, setCountSession] = useState(0);
   const [countTotalTime, setCountTotalTime] = useState(0);
-  const [sessionType, setSessionType] = useState("deepwork");
+  const [isDeepWorkSession, setIsDeepWorkSession] = useState(true);
 
   let formattedTimeLeft;
 
@@ -87,6 +87,10 @@ function App() {
     const seconds = Number(sessionTime) * 60;
     setTimeLeft(seconds);
     setOnSession(true);
+
+    // chrome.browserAction.onClicked.addListener(function () {
+    //   alert("Hello, World!");
+    // });
   };
 
   useEffect(() => {
@@ -112,10 +116,13 @@ function App() {
       if (onSession) {
         window.alert("hi");
         setOnSession(false);
-        if (sessionType === "deepwork") {
+        if (isDeepWorkSession) {
           handleCountSessions(sessionTime);
         }
       }
+      // chrome.notifications.create("id", opt, function () {
+      //   console.log("hello");
+      // });
       return;
     }
 
@@ -125,7 +132,7 @@ function App() {
   const handleStopSession = () => {
     setTimeLeft(0);
     setOnSession(false);
-    if (sessionType === "deepwork") {
+    if (isDeepWorkSession) {
       handleCountSessions(sessionTime - timeLeft / 60);
     }
   };
@@ -149,14 +156,18 @@ function App() {
     <>
       <Container>
         <FlexWrapper>
-          <DeepWorkButton onClick={() => setSessionType("deepwork")}>
+          <DeepWorkButton onClick={() => setIsDeepWorkSession(true)}>
             Deep Work
           </DeepWorkButton>
-          <BreakButton onClick={() => setSessionType("break")}>
+          <BreakButton onClick={() => setIsDeepWorkSession(false)}>
             Break
           </BreakButton>
         </FlexWrapper>
-        <SessionBar onClick={handleClickMinute} disabled={onSession} />
+        <SessionBar
+          primary={isDeepWorkSession}
+          onClick={handleClickMinute}
+          disabled={onSession}
+        />
         <Timer>{onSession ? formattedTimeLeft : sessionTime}</Timer>
         <div>
           {!onSession && (

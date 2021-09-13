@@ -6,6 +6,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 40px;
 `;
 
 const Minutes = styled(Button)`
@@ -19,7 +21,7 @@ const Minutes = styled(Button)`
 function SessionBar(props) {
   const { onClick, disabled, primary } = props;
 
-  const sessionsArray = [0.1, 10, 15, 20, 25];
+  const sessionsArray = [5, 10, 15, 20, 25];
   const sessionsArray2 = [30, 40, 50, 60, 90];
   return (
     <>
@@ -35,8 +37,6 @@ function SessionBar(props) {
             </Minutes>
           );
         })}
-      </Wrapper>
-      <Wrapper>
         {sessionsArray2.map((session) => {
           return (
             <Minutes

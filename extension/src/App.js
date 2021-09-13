@@ -23,7 +23,8 @@ const TextWrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 12px;
-  border: solid 0.5px #a7a7a7;
+  border: solid 0.5px #999999;
+  color: #3b3b3b;
   border-radius: 4px;
   margin: 4px 0;
 `;
@@ -61,13 +62,22 @@ const Timer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 100px;
+  width: 112px;
+  height: 112px;
 
   border-radius: 50%;
   background-color: ${(props) => (props.primary ? "#ee6352" : "#3f97b9")};
   color: white;
   margin: 4px 0;
+  font-size: 20px;
+`;
+
+const PartyImage = styled.img.attrs({
+  src: "https://img.icons8.com/emoji/48/000000/cupcake-emoji.png",
+})`
+  height: 20px;
+  width: 20px;
+  padding-left: 2px;
 `;
 
 function App() {
@@ -191,10 +201,17 @@ function App() {
               Stop Pomodoro
             </Button>
           )}
-          <TextWrapper>
-            Today you have done: {countSession} sessions,{" "}
-            {countTotalTime.toFixed(1)} minutes
-          </TextWrapper>
+          {isDeepWorkSession ? (
+            <TextWrapper>
+              Today you have done: {countSession} sessions,{" "}
+              {countTotalTime.toFixed(1)} minutes
+            </TextWrapper>
+          ) : (
+            <TextWrapper>
+              Enjoy your break!
+              <PartyImage />
+            </TextWrapper>
+          )}
         </div>
       </Container>
     </>

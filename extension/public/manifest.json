@@ -10,5 +10,10 @@
     "default_icon": "./logo192.png",
     "default_popup": "popup.html",
     "default_title": "advanced timer chrome app"
+  },
+  "permissions": ["notifications", "storage"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
   }
 }

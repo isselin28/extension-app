@@ -99,6 +99,9 @@ function App() {
     setTimeLeft(seconds);
     setOnSession(true);
 
+    chrome.runtime.sendMessage({ cmd: "START_TIMER", when: time });
+    startTimer(time);
+
     // chrome.browserAction.onClicked.addListener(function () {
     //   alert("Hello, World!");
     // });
@@ -114,6 +117,13 @@ function App() {
       iconUrl: "./logo.svg",
     };
 
+    chrome.runtime.sendMessage({ cmd: "GET_TIME" }, (response) => {
+      if (response.time) {
+        const time = new Date(response.time);
+        startTimer(time);
+      }
+    });
+
     const timer = setTimeout(() => {
       if (sessionTime > 0) {
         setTimeLeft(timeLeft - 1);
@@ -125,7 +135,7 @@ function App() {
       clearTimeout(timer);
 
       if (onSession) {
-        window.alert("hi");
+        window.alert("You have done a deep work session");
         setOnSession(false);
         if (isDeepWorkSession) {
           handleCountSessions(sessionTime);

@@ -27,7 +27,11 @@
     "watch": "watch 'npm run build' ./src"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "webextensions": true,
+      "chrome": true
+    }
   },
   "browserslist": {
     "production": [
